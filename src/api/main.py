@@ -7,12 +7,7 @@ from contextlib import asynccontextmanager
 
 from src.database import init_db
 from src.config import redis_client, settings
-from src.api.routes import recommend, stats, health
-
-import os
-
-env_variable_value = os.getenv('OPENAI_API_KEY')
-print(env_variable_value)
+from src.api.routes import recommend, health
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -48,28 +43,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(recommend.router)
-app.include_router(stats.router)
 app.include_router(health.router)
-
-
-@app.get("/")
-async def root():
-    """Health check endpoint"""
-    return {
-        "service": "Wedding Dress Recommendation API",
-        "status": "running",
-        "version": "3.0.0"
-    }
-
-
-@app.get("/health")
-async def health_check():
-    """Detailed health check"""
-    return {
-        "status": "healthy",
-        "redis": "connected" if redis_client.client else "disconnected",
-        "database": "connected"
-    }
 
 
 if __name__ == "__main__":

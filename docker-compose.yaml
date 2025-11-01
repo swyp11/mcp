@@ -1,23 +1,23 @@
 services:
   # MySQL Database
-  mysql:
-    image: mysql:8.0
-    container_name: wedding_dress_mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: wedding_dress_db
-    ports:
-      - "13306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./scripts/db/init.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - wedding_dress_network
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: wedding_dress_mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+  #     MYSQL_DATABASE: wedding_dress_db
+  #   ports:
+  #     - "13306:3306"
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+  #     - ./scripts/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+  #   healthcheck:
+  #     test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #   networks:
+  #     - wedding_dress_network
 
   # Redis Cache
   redis:
@@ -42,20 +42,20 @@ services:
     container_name: wedding_dress_api
     environment:
       OPENAI_API_KEY: ${OPENAI_API_KEY}
-      MYSQL_HOST: mysql
-      MYSQL_PORT: 3306
-      MYSQL_USER: root
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: wedding_dress_db
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      APP_HOST: 0.0.0.0
-      APP_PORT: 8000
+      REDIS_DB: ${REDIS_DB}
+      APP_HOST: ${APP_HOST}
+      APP_PORT: ${APP_PORT}
+      CACHE_TTL: ${CACHE_TTL}
     ports:
       - "18000:8000"
     depends_on:
-      mysql:
-        condition: service_healthy
       redis:
         condition: service_healthy
     volumes:
@@ -65,8 +65,6 @@ services:
     restart: unless-stopped
 
 volumes:
-  mysql_data:
-    driver: local
   redis_data:
     driver: local
 
