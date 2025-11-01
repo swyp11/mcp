@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 
 from src.database import init_db
 from src.config import redis_client, settings
-from src.api.routes import recommend, stats
+from src.api.routes import recommend, stats, health
 
 import os
 
@@ -49,6 +49,7 @@ app.add_middleware(
 # Include routers
 app.include_router(recommend.router)
 app.include_router(stats.router)
+app.include_router(health.router)
 
 
 @app.get("/")
