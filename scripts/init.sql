@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS recommendation_queries (
     leg_length VARCHAR(20) NOT NULL,
     neck_length VARCHAR(20) NOT NULL,
     face_shape VARCHAR(20) NOT NULL,
+    body_type VARCHAR(20) NOT NULL,
 
     -- Result (JSON)
     recommendation JSON NOT NULL,
@@ -28,7 +29,7 @@ CREATE TABLE IF NOT EXISTS recommendation_queries (
     -- Indexes
     INDEX idx_query_hash (query_hash),
     INDEX idx_created_at (created_at),
-    INDEX idx_query_params (arm_length, leg_length, neck_length, face_shape),
+    INDEX idx_query_params (arm_length, leg_length, neck_length, face_shape, body_type),
     INDEX idx_access_count (access_count)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

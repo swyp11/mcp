@@ -16,6 +16,7 @@ class RecommendationQuery(Base):
     leg_length = Column(String(20), nullable=False)
     neck_length = Column(String(20), nullable=False)
     face_shape = Column(String(20), nullable=False)
+    body_type = Column(String(20), nullable=False)
 
     # Result
     recommendation = Column(JSON, nullable=False)
@@ -26,5 +27,5 @@ class RecommendationQuery(Base):
     last_accessed = Column(DateTime, default=datetime.utcnow)
 
     __table_args__ = (
-        Index('idx_query_params', 'arm_length', 'leg_length', 'neck_length', 'face_shape'),
+        Index('idx_query_params', 'arm_length', 'leg_length', 'neck_length', 'face_shape', 'body_type'),
     )

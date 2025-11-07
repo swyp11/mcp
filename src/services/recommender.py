@@ -13,9 +13,9 @@ class DressRecommender:
         self.client = AsyncOpenAI(api_key=settings.openai_api_key)
 
     @staticmethod
-    def generate_hash(arm: str, leg: str, neck: str, face: str, num: int = 3) -> str:
+    def generate_hash(arm: str, leg: str, neck: str, face: str, body: str, num: int = 3) -> str:
         """Generate unique hash for request parameters"""
-        params = f"{arm}_{leg}_{neck}_{face}_{num}"
+        params = f"{arm}_{leg}_{neck}_{face}_{body}_{num}"
         return hashlib.sha256(params.encode()).hexdigest()
 
     async def generate(
@@ -24,6 +24,7 @@ class DressRecommender:
         leg_length: str,
         neck_length: str,
         face_shape: str,
+        body_type: str,
         num_recommendations: int = 3
     ) -> dict:
         """Generate AI recommendation with optimized token usage"""
@@ -32,12 +33,16 @@ class DressRecommender:
         available_styles = get_all_style_names()
         styles_list = ", ".join(available_styles)
 
-        # Optimized prompt - only ask for style names and brief advice
-        prompt = f"""신체 특징:
+        # Build body characteristics
+        body_chars = f"""신체 특징:
 - 팔: {arm_length}
 - 다리: {leg_length}
 - 목: {neck_length}
 - 얼굴형: {face_shape}
+- 체형: {body_type}"""
+
+        # Optimized prompt - only ask for style names and brief advice
+        prompt = f"""{body_chars}
 
 다음 스타일 중 가장 어울리는 {num_recommendations}가지를 추천하세요:
 {styles_list}
@@ -74,10 +79,13 @@ JSON 형식 ({num_recommendations}개 추천):
         # Build final response with detailed information
         recommendations = []
         for style_info in detailed_styles:
+            why_parts = [f"{arm_length} 팔", f"{leg_length} 다리", f"{neck_length} 목", f"{face_shape} 얼굴형", f"{body_type} 체형"]
+            why_recommended = f"{', '.join(why_parts)}에 잘 어울립니다."
+
             recommendations.append({
                 "style_name": style_info["style_name"],
                 "description": style_info["description"],
-                "why_recommended": f"{arm_length} 팔, {leg_length} 다리, {neck_length} 목, {face_shape} 얼굴형에 잘 어울립니다.",
+                "why_recommended": why_recommended,
                 "styling_tips": style_info["styling_tips"]
             })
 

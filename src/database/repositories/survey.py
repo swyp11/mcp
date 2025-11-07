@@ -44,7 +44,8 @@ class SurveyRepository:
         arm_length: str,
         leg_length: str,
         neck_length: str,
-        face_shape: str
+        face_shape: str,
+        body_type: str
     ) -> List[Survey]:
         """Get surveys by body measurements"""
         result = await db.execute(
@@ -54,7 +55,8 @@ class SurveyRepository:
                 Survey.arm_length == arm_length,
                 Survey.leg_length == leg_length,
                 Survey.neck_length == neck_length,
-                Survey.face_shape == face_shape
+                Survey.face_shape == face_shape,
+                Survey.body_type == body_type
             )
             .order_by(Survey.created_at.desc())
         )
@@ -138,13 +140,15 @@ class SurveyRepository:
                 Survey.leg_length,
                 Survey.neck_length,
                 Survey.face_shape,
+                Survey.body_type,
                 func.count(Survey.id).label('count')
             )
             .group_by(
                 Survey.arm_length,
                 Survey.leg_length,
                 Survey.neck_length,
-                Survey.face_shape
+                Survey.face_shape,
+                Survey.body_type
             )
             .order_by(func.count(Survey.id).desc())
             .limit(5)
@@ -155,7 +159,8 @@ class SurveyRepository:
                 "leg_length": row[1],
                 "neck_length": row[2],
                 "face_shape": row[3],
-                "count": row[4]
+                "body_type": row[4],
+                "count": row[5]
             }
             for row in body_type_result
         ]
@@ -201,6 +206,10 @@ class SurveyRepository:
             select(Survey.face_shape, func.count(Survey.id))
             .group_by(Survey.face_shape)
         )
+        body_dist = await db.execute(
+            select(Survey.body_type, func.count(Survey.id))
+            .group_by(Survey.body_type)
+        )
 
         return {
             "total_surveys": total_surveys,
@@ -210,7 +219,8 @@ class SurveyRepository:
                 "arm_length": {row[0]: row[1] for row in arm_dist},
                 "leg_length": {row[0]: row[1] for row in leg_dist},
                 "neck_length": {row[0]: row[1] for row in neck_dist},
-                "face_shape": {row[0]: row[1] for row in face_dist}
+                "face_shape": {row[0]: row[1] for row in face_dist},
+                "body_type": {row[0]: row[1] for row in body_dist}
             }
         }
 

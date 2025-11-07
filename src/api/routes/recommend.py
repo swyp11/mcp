@@ -20,6 +20,7 @@ async def recommend_dress(request: RecommendationRequest):
     - **leg_length**: Leg length (short, normal, long)
     - **neck_length**: Neck length (short, normal, long)
     - **face_shape**: Face shape (oval, wide, angular, long)
+    - **body_type**: Body type (thin, medium, heavy)
     - **num_recommendations**: Number of recommendations (1-5, default: 3)
 
     Returns wedding dress recommendations with styling tips
@@ -29,11 +30,12 @@ async def recommend_dress(request: RecommendationRequest):
         leg_length = request.leg_length.value
         neck_length = request.neck_length.value
         face_shape = request.face_shape.value
+        body_type = request.body_type.value
         num_recommendations = request.num_recommendations
 
         # Generate query hash
         query_hash = DressRecommender.generate_hash(
-            arm_length, leg_length, neck_length, face_shape, num_recommendations
+            arm_length, leg_length, neck_length, face_shape, body_type, num_recommendations
         )
 
         # 1. Check Redis cache
@@ -71,12 +73,12 @@ async def recommend_dress(request: RecommendationRequest):
 
             # 3. Generate new recommendation
             recommendation = await recommender.generate(
-                arm_length, leg_length, neck_length, face_shape, num_recommendations
+                arm_length, leg_length, neck_length, face_shape, body_type, num_recommendations
             )
 
             # Save to database
             await recommendation_repo.create(
-                db, query_hash, arm_length, leg_length, neck_length, face_shape, recommendation
+                db, query_hash, arm_length, leg_length, neck_length, face_shape, recommendation, body_type
             )
 
         # Save to cache

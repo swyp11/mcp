@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS surveys (
     leg_length ENUM('short', 'medium', 'long') NOT NULL,
     neck_length ENUM('short', 'medium', 'long') NOT NULL,
     face_shape ENUM('oval', 'wide', 'angular', 'long') NOT NULL,
+    body_type ENUM('thin', 'medium', 'heavy') NOT NULL,
 
     -- Recommended dress
     dress_id INT,
@@ -43,7 +44,7 @@ CREATE TABLE IF NOT EXISTS surveys (
 
     -- Foreign keys and indexes
     FOREIGN KEY (dress_id) REFERENCES wedding_dresses(id) ON DELETE SET NULL,
-    INDEX idx_body_type (arm_length, leg_length, neck_length, face_shape),
+    INDEX idx_body_type (arm_length, leg_length, neck_length, face_shape, body_type),
     INDEX idx_dress (dress_id),
     INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

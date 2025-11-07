@@ -42,7 +42,8 @@ class RecommendationRepository:
         leg_length: str,
         neck_length: str,
         face_shape: str,
-        recommendation: dict
+        recommendation: dict,
+        body_type: str
     ) -> RecommendationQuery:
         """Create new recommendation record"""
         query_record = RecommendationQuery(
@@ -51,6 +52,7 @@ class RecommendationRepository:
             leg_length=leg_length,
             neck_length=neck_length,
             face_shape=face_shape,
+            body_type=body_type,
             recommendation=recommendation,
             access_count=1
         )
@@ -81,13 +83,15 @@ class RecommendationRepository:
                 RecommendationQuery.leg_length,
                 RecommendationQuery.neck_length,
                 RecommendationQuery.face_shape,
+                RecommendationQuery.body_type,
                 func.sum(RecommendationQuery.access_count).label('total_access')
             )
             .group_by(
                 RecommendationQuery.arm_length,
                 RecommendationQuery.leg_length,
                 RecommendationQuery.neck_length,
-                RecommendationQuery.face_shape
+                RecommendationQuery.face_shape,
+                RecommendationQuery.body_type
             )
             .order_by(func.sum(RecommendationQuery.access_count).desc())
             .limit(5)
@@ -98,7 +102,8 @@ class RecommendationRepository:
                 "leg_length": row[1],
                 "neck_length": row[2],
                 "face_shape": row[3],
-                "access_count": row[4]
+                "body_type": row[4],
+                "access_count": row[5]
             }
             for row in popular_result
         ]

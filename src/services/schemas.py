@@ -31,12 +31,19 @@ class FaceShape(str, Enum):
     LONG = "long"
 
 
+class BodyType(str, Enum):
+    THIN = "thin"
+    MEDIUM = "medium"
+    HEAVY = "heavy"
+
+
 class RecommendationRequest(BaseModel):
     """Wedding dress recommendation request"""
     arm_length: ArmLength = Field(..., description="Arm length")
     leg_length: LegLength = Field(..., description="Leg length")
     neck_length: NeckLength = Field(..., description="Neck length")
     face_shape: FaceShape = Field(..., description="Face shape")
+    body_type: BodyType = Field(..., description="Body type")
     num_recommendations: int = Field(
         default=3,
         ge=1,
@@ -51,6 +58,7 @@ class RecommendationRequest(BaseModel):
                 "leg_length": "long",
                 "neck_length": "medium",
                 "face_shape": "oval",
+                "body_type": "medium",
                 "num_recommendations": 3
             }
         }
@@ -128,6 +136,7 @@ class SurveyBase(BaseModel):
     leg_length: LegLength = Field(..., description="Leg length")
     neck_length: NeckLength = Field(..., description="Neck length")
     face_shape: FaceShape = Field(..., description="Face shape")
+    body_type: BodyType = Field(..., description="Body type")
     event_date: Optional[date] = Field(None, description="Wedding event date")
     notes: Optional[str] = Field(None, description="Additional notes")
 
