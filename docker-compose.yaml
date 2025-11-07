@@ -29,30 +29,23 @@ services:
     volumes:
       - redis_data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
       timeout: 5s
       retries: 5
     networks:
       - wedding_dress_network
 
-  # FastAPI Server
-  api:
+  # FastAPI Server (Python)
+  ai-api:
     build: .
     container_name: wedding_dress_api
+    env_file:
+      - .env-ai
     environment:
-      OPENAI_API_KEY: ${OPENAI_API_KEY}
-      MYSQL_HOST: ${MYSQL_HOST}
-      MYSQL_PORT: ${MYSQL_PORT}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      REDIS_DB: ${REDIS_DB}
-      APP_HOST: ${APP_HOST}
-      APP_PORT: ${APP_PORT}
-      CACHE_TTL: ${CACHE_TTL}
+      REDIS_DB: 0
     ports:
       - "18000:8000"
     depends_on:

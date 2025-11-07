@@ -8,12 +8,12 @@ class Settings(BaseSettings):
     # OpenAI
     openai_api_key: str
 
-    # MySQL
-    mysql_host: str = "localhost"
-    mysql_port: int = 3306
-    mysql_user: str = "root"
-    mysql_password: str
-    mysql_database: str = "wedding_dress_db"
+    # MySQL (환경변수: DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_NAME)
+    db_host: str = "localhost"
+    db_port: int = 3306
+    db_username: str = "root"
+    db_password: str
+    db_name: str = "wedding_dress_db"
 
     # Redis
     redis_host: str = "localhost"
@@ -28,7 +28,7 @@ class Settings(BaseSettings):
 
     @property
     def mysql_url(self) -> str:
-        return f"mysql+aiomysql://{self.mysql_user}:{self.mysql_password}@{self.mysql_host}:{self.mysql_port}/{self.mysql_database}"
+        return f"mysql+aiomysql://{self.db_username}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"
 
     @property
     def redis_url(self) -> str:
