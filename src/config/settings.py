@@ -26,6 +26,9 @@ class Settings(BaseSettings):
     app_port: int = 8000
     cache_ttl: int = 3600
 
+    # Image Storage
+    image_base_path: str = "/data/images"  # 이미지가 저장된 서버 경로
+
     @property
     def mysql_url(self) -> str:
         return f"mysql+aiomysql://{self.db_username}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}"

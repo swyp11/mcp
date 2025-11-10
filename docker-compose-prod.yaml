@@ -49,6 +49,8 @@ services:
       DB_HOST: host.docker.internal
     ports:
       - "8000:8000"
+    volumes:
+      - /data/images:/data/images:ro  # 이미지 디렉토리 마운트 (읽기 전용)
     depends_on:
       redis:
         condition: service_healthy
