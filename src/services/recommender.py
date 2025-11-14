@@ -3,7 +3,7 @@ import hashlib
 import json
 from openai import AsyncOpenAI
 from src.config import settings
-from src.services.styles_data import get_style_details, get_all_style_names
+from src.services.styles_data import get_style_details, get_styles_with_suitability
 
 
 class DressRecommender:
@@ -29,9 +29,8 @@ class DressRecommender:
     ) -> dict:
         """Generate AI recommendation with optimized token usage"""
 
-        # Get available styles list
-        available_styles = get_all_style_names()
-        styles_list = ", ".join(available_styles)
+        # Get available styles with suitability info
+        styles_with_info = get_styles_with_suitability()
 
         # Build body characteristics
         body_chars = f"""신체 특징:
@@ -41,11 +40,15 @@ class DressRecommender:
 - 얼굴형: {face_shape}
 - 체형: {body_type}"""
 
-        # Optimized prompt - only ask for style names and brief advice
+        # Improved prompt with suitability information
         prompt = f"""{body_chars}
 
-다음 스타일 중 가장 어울리는 {num_recommendations}가지를 추천하세요:
-{styles_list}
+다음 스타일 목록에서 위 신체 특징에 가장 잘 어울리는 {num_recommendations}가지를 추천하세요.
+각 스타일 옆에 적합한 체형 정보가 있으니 이를 참고하여 매칭하세요:
+
+{styles_with_info}
+
+중요: 신체 특징과 각 스타일의 적합성을 신중히 비교하여 최적의 조합을 선택하세요.
 
 JSON 형식 ({num_recommendations}개 추천):
 {{

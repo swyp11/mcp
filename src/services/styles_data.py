@@ -16,7 +16,7 @@ WEDDING_DRESS_STYLES = {
             "베일은 미디엄 길이가 조화로움",
             "허리 라인에 벨트나 새시로 포인트 가능"
         ],
-        "suitable_for": ["모든 체형", "긴 다리", "보통 팔", "달걀형 얼굴"]
+        "suitable_for": ["모든 체형", "thin", "medium", "heavy", "긴 다리", "짧은 다리", "보통 팔", "긴 팔", "짧은 목", "보통 목", "긴 목", "oval", "wide", "angular", "long"]
     },
 
     "볼가운": {
@@ -34,7 +34,7 @@ WEDDING_DRESS_STYLES = {
             "하이힐 필수 (스커트 길이 고려)",
             "볼륨있는 헤어스타일이나 우아한 업스타일"
         ],
-        "suitable_for": ["작은 체형", "긴 목", "넓은 어깨 커버", "달걀형/긴 얼굴"]
+        "suitable_for": ["thin", "medium", "heavy", "짧은 다리", "보통 다리", "긴 목", "보통 목", "넓은 어깨", "짧은 팔", "보통 팔", "oval", "long", "wide"]
     },
 
     "머메이드": {
@@ -52,7 +52,7 @@ WEDDING_DRESS_STYLES = {
             "누드톤 하이힐로 다리 라인 연장",
             "보정 속옷으로 완벽한 실루엣 완성"
         ],
-        "suitable_for": ["균형잡힌 체형", "긴 다리", "긴 목", "모든 얼굴형"]
+        "suitable_for": ["thin", "medium", "긴 다리", "보통 다리", "긴 목", "보통 목", "긴 팔", "보통 팔", "oval", "wide", "angular", "long"]
     },
 
     "엠파이어": {
@@ -70,7 +70,7 @@ WEDDING_DRESS_STYLES = {
             "심플한 샌들이나 로우힐도 어울림",
             "목선 강조하는 목걸이"
         ],
-        "suitable_for": ["작은 체형", "긴 목", "임산부", "달걀형/긴 얼굴"]
+        "suitable_for": ["thin", "medium", "heavy", "짧은 다리", "보통 다리", "긴 다리", "긴 목", "보통 목", "짧은 팔", "보통 팔", "긴 팔", "oval", "long", "wide"]
     },
 
     "시스": {
@@ -88,7 +88,7 @@ WEDDING_DRESS_STYLES = {
             "미니멀한 부케",
             "샤프한 하이힐로 스타일 완성"
         ],
-        "suitable_for": ["슬림한 체형", "긴 다리", "작은 가슴", "모든 얼굴형"]
+        "suitable_for": ["thin", "긴 다리", "보통 다리", "긴 목", "보통 목", "짧은 팔", "보통 팔", "긴 팔", "oval", "wide", "angular", "long"]
     },
 
     "트럼펫": {
@@ -106,7 +106,7 @@ WEDDING_DRESS_STYLES = {
             "하이힐로 다리 라인 연장",
             "클래식한 부케"
         ],
-        "suitable_for": ["보통~슬림 체형", "긴 다리", "긴 목", "모든 얼굴형"]
+        "suitable_for": ["thin", "medium", "긴 다리", "보통 다리", "긴 목", "보통 목", "짧은 팔", "보통 팔", "긴 팔", "oval", "wide", "angular", "long"]
     },
 
     "프린세스": {
@@ -124,7 +124,7 @@ WEDDING_DRESS_STYLES = {
             "심플한 액세서리로 밸런스",
             "드라마틱한 부케"
         ],
-        "suitable_for": ["작은 체형", "긴 목", "하체 커버 필요", "달걀형/긴 얼굴"]
+        "suitable_for": ["thin", "medium", "heavy", "짧은 다리", "보통 다리", "긴 다리", "긴 목", "보통 목", "짧은 팔", "보통 팔", "oval", "long", "wide"]
     },
 
     "슬립드레스": {
@@ -142,7 +142,7 @@ WEDDING_DRESS_STYLES = {
             "누드톤 스트랩 샌들",
             "작고 심플한 부케"
         ],
-        "suitable_for": ["슬림한 체형", "긴 목", "작은 가슴", "모든 얼굴형"]
+        "suitable_for": ["thin", "긴 다리", "보통 다리", "긴 목", "보통 목", "짧은 팔", "보통 팔", "긴 팔", "oval", "wide", "angular", "long"]
     },
 
     "티어드": {
@@ -160,7 +160,7 @@ WEDDING_DRESS_STYLES = {
             "레이스 베일",
             "와일드 플라워 부케"
         ],
-        "suitable_for": ["보통 체형", "긴 다리", "모든 목 길이", "달걀형/넓은 얼굴"]
+        "suitable_for": ["thin", "medium", "heavy", "긴 다리", "보통 다리", "짧은 다리", "짧은 목", "보통 목", "긴 목", "짧은 팔", "보통 팔", "긴 팔", "oval", "wide", "angular"]
     },
 
     "하이-로우": {
@@ -178,7 +178,7 @@ WEDDING_DRESS_STYLES = {
             "짧은 베일이나 베일 없이",
             "컴팩트한 부케"
         ],
-        "suitable_for": ["슬림한 체형", "긴 다리", "자신감 있는 신부", "모든 얼굴형"]
+        "suitable_for": ["thin", "medium", "긴 다리", "보통 다리", "긴 목", "보통 목", "짧은 팔", "보통 팔", "긴 팔", "oval", "wide", "angular", "long"]
     },
 
     "오프숄더": {
@@ -196,7 +196,7 @@ WEDDING_DRESS_STYLES = {
             "어깨 라인 관리 중요",
             "심플한 팔찌나 링"
         ],
-        "suitable_for": ["보통 어깨", "긴 목", "좋은 쇄골 라인", "모든 얼굴형"]
+        "suitable_for": ["thin", "medium", "heavy", "긴 다리", "보통 다리", "짧은 다리", "긴 목", "보통 목", "짧은 팔", "보통 팔", "oval", "wide", "angular", "long"]
     },
 
     "홀터넥": {
@@ -214,7 +214,7 @@ WEDDING_DRESS_STYLES = {
             "등 라인 관리 중요",
             "하이힐로 전체 비율 맞추기"
         ],
-        "suitable_for": ["넓은 어깨", "긴 목", "좋은 등 라인", "각진/달걀형 얼굴"]
+        "suitable_for": ["thin", "medium", "긴 다리", "보통 다리", "긴 목", "보통 목", "넓은 어깨", "긴 팔", "보통 팔", "angular", "oval", "wide"]
     }
 }
 
@@ -251,3 +251,12 @@ def get_style_details(style_names: list[str]) -> list[dict]:
 def get_all_style_names() -> list[str]:
     """Get list of all available style names"""
     return list(WEDDING_DRESS_STYLES.keys())
+
+
+def get_styles_with_suitability() -> str:
+    """Get formatted list of styles with their suitability information"""
+    lines = []
+    for style_name, style_info in WEDDING_DRESS_STYLES.items():
+        suitable = ", ".join(style_info["suitable_for"])
+        lines.append(f"- {style_name}: {suitable}")
+    return "\n".join(lines)
