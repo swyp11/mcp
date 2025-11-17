@@ -16,7 +16,7 @@ WEDDING_DRESS_STYLES = {
             "베일은 미디엄 길이가 조화로움",
             "허리 라인에 벨트나 새시로 포인트 가능"
         ],
-        "suitable_for": ["모든 체형", "thin", "medium", "heavy", "긴 다리", "짧은 다리", "보통 팔", "긴 팔", "짧은 목", "보통 목", "긴 목", "oval", "wide", "angular", "long"]
+        "suitable_for": ["medium", "짧은 다리", "보통 팔", "짧은 목", "보통 목", "oval", "wide"]
     },
 
     "볼가운": {
