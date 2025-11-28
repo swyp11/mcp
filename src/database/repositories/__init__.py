@@ -1,6 +1,4 @@
 # Database repositories
-from src.database.repositories.recommendation import recommendation_repo
+from src.database.repositories.venue import venue_repo
 
-__all__ = [
-    "recommendation_repo"
-]
+__all__ = ["venue_repo"]
