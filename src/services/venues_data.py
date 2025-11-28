@@ -420,7 +420,7 @@ def get_venues_with_suitability() -> str:
         guest_count = ", ".join(suitable.get("guest_count", []))
         budget = ", ".join(suitable.get("budget", []))
         style = ", ".join(suitable.get("style", []))
-        
+
         lines.append(
             f"- {venue_name}: "
             f"하객수({guest_count}), "
@@ -429,3 +429,64 @@ def get_venues_with_suitability() -> str:
             f"지역({venue_info['region']})"
         )
     return "\n".join(lines)
+
+
+def filter_venues(
+    guest_count: str,
+    budget: str,
+    region: str,
+    style_preference: str,
+    season: str,
+    num_recommendations: int = 3
+) -> list[dict]:
+    """
+    Filter venues based on criteria and return top matches by score
+
+    Args:
+        guest_count: 소규모/중규모/대규모
+        budget: 저/중/고
+        region: 서울/경기/인천/상관없음
+        style_preference: 럭셔리/모던/클래식/자연친화/야외정원/미니멀/유니크
+        season: 봄/여름/가을/겨울
+        num_recommendations: Number of results to return
+
+    Returns:
+        List of venue dicts sorted by match score
+    """
+    scored_venues = []
+
+    for venue_name, venue_info in WEDDING_VENUES.items():
+        score = 0
+        suitable = venue_info["suitable_for"]
+
+        # 하객 수 매칭 (필수 조건, 가중치 높음)
+        if guest_count in suitable.get("guest_count", []):
+            score += 3
+
+        # 예산 매칭 (필수 조건, 가중치 높음)
+        if budget in suitable.get("budget", []):
+            score += 3
+
+        # 지역 매칭
+        if region == "상관없음" or venue_info.get("region") == region:
+            score += 2
+
+        # 스타일 매칭
+        if style_preference in suitable.get("style", []):
+            score += 2
+
+        # 시즌 매칭
+        if season in venue_info.get("seasons", []):
+            score += 1
+
+        # 최소 점수 이상만 추가 (하객수 + 예산 매칭 필수)
+        if score >= 6:
+            venue_data = venue_info.copy()
+            venue_data["venue_name"] = venue_name
+            venue_data["match_score"] = score
+            scored_venues.append(venue_data)
+
+    # 점수순 정렬
+    scored_venues.sort(key=lambda x: x["match_score"], reverse=True)
+
+    return scored_venues[:num_recommendations]
