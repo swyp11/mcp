@@ -1,61 +1,40 @@
-import redis.asyncio as redis
-from typing import Optional
-import json
-from src.config.settings import settings
+# Redis disabled - not used in deployment
+# import redis.asyncio as redis
+# from typing import Optional
+# import json
+# from src.config.settings import settings
 
 
 class RedisClient:
-    """Redis cache client"""
+    """Redis cache client (disabled)"""
 
     def __init__(self):
-        self.client: Optional[redis.Redis] = None
+        self.client = None
 
     async def connect(self):
-        """Connect to Redis"""
-        self.client = await redis.from_url(
-            settings.redis_url,
-            encoding="utf-8",
-            decode_responses=True
-        )
+        """Connect to Redis (disabled)"""
+        pass
 
     async def disconnect(self):
-        """Disconnect from Redis"""
-        if self.client:
-            await self.client.close()
+        """Disconnect from Redis (disabled)"""
+        pass
 
-    async def get(self, key: str) -> Optional[dict]:
-        """Get value from cache"""
-        if not self.client:
-            return None
-
-        value = await self.client.get(key)
-        if value:
-            return json.loads(value)
+    async def get(self, key: str):
+        """Get value from cache (disabled)"""
         return None
 
     async def set(self, key: str, value: dict, ttl: int = None):
-        """Set value in cache"""
-        if not self.client:
-            return
-
-        ttl = ttl or settings.cache_ttl
-        await self.client.setex(
-            key,
-            ttl,
-            json.dumps(value)
-        )
+        """Set value in cache (disabled)"""
+        pass
 
     async def delete(self, key: str):
-        """Delete key from cache"""
-        if self.client:
-            await self.client.delete(key)
+        """Delete key from cache (disabled)"""
+        pass
 
     async def exists(self, key: str) -> bool:
-        """Check if key exists"""
-        if not self.client:
-            return False
-        return await self.client.exists(key) > 0
+        """Check if key exists (disabled)"""
+        return False
 
 
-# Global Redis client instance
+# Global Redis client instance (no-op)
 redis_client = RedisClient()

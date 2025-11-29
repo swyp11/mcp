@@ -5,7 +5,8 @@ from src.services.schemas import VenueRecommendationRequest, VenueRecommendation
 from src.services.venue_recommender import venue_recommender, VenueRecommender
 from src.database import AsyncSessionLocal
 from src.database.repositories.venue import venue_repo
-from src.config import redis_client
+# Redis disabled
+# from src.config import redis_client
 
 router = APIRouter(prefix="", tags=["venue-recommendations"])
 

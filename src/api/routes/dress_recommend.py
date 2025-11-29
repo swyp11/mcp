@@ -5,7 +5,8 @@ from src.services.schemas import RecommendationRequest, RecommendationResponse, 
 from src.services.dress_recommender import recommender, DressRecommender
 from src.database import AsyncSessionLocal
 from src.database.repositories.dress import recommendation_repo
-from src.config import redis_client
+# Redis disabled
+# from src.config import redis_client
 
 router = APIRouter(prefix="", tags=["recommendations"])
 
@@ -57,8 +58,8 @@ async def recommend_dress(request: RecommendationRequest):
             db_record = await recommendation_repo.get_by_hash(db, query_hash)
             if db_record:
                 result = db_record.recommendation
-                # Save to Redis cache
-                await redis_client.set(f"recommendation:{query_hash}", result)
+                # Redis disabled
+                # await redis_client.set(f"recommendation:{query_hash}", result)
 
                 return RecommendationResponse(
                     request_params=request,
@@ -81,8 +82,8 @@ async def recommend_dress(request: RecommendationRequest):
                 db, query_hash, arm_length, leg_length, neck_length, face_shape, recommendation, body_type
             )
 
-        # Save to cache
-        await redis_client.set(f"recommendation:{query_hash}", recommendation)
+        # Redis disabled
+        # await redis_client.set(f"recommendation:{query_hash}", recommendation)
 
         return RecommendationResponse(
             request_params=request,

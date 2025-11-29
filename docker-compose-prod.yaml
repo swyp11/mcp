@@ -19,22 +19,22 @@ services:
   #   networks:
   #     - wedding_dress_network
 
-  # Redis Cache
-  redis:
-    image: redis:7-alpine
-    container_name: wedding_dress_redis
-    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
-    ports:
-      - "16379:6379"
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - wedding_dress_network
+  # Redis Cache (disabled)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: wedding_dress_redis
+  #   command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+  #   ports:
+  #     - "16379:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   healthcheck:
+  #     test: [ "CMD", "redis-cli", "ping" ]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #   networks:
+  #     - wedding_dress_network
 
   # FastAPI Server (Python)
   ai-api:
@@ -43,17 +43,19 @@ services:
     env_file:
       - .env-ai
     environment:
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      REDIS_DB: 0
+      # Redis disabled
+      # REDIS_HOST: redis
+      # REDIS_PORT: 6379
+      # REDIS_DB: 0
       DB_HOST: host.docker.internal
     ports:
       - "8000:8000"
     volumes:
       - /data/images:/data/images:ro  # 이미지 디렉토리 마운트 (읽기 전용)
-    depends_on:
-      redis:
-        condition: service_healthy
+    # Redis dependency removed
+    # depends_on:
+    #   redis:
+    #     condition: service_healthy
     networks:
       - wedding_dress_network
     extra_hosts:
@@ -85,9 +87,10 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-volumes:
-  redis_data:
-    driver: local
+# Redis volume disabled
+# volumes:
+#   redis_data:
+#     driver: local
 
 networks:
   wedding_dress_network:

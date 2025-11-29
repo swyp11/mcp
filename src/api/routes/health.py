@@ -2,7 +2,8 @@
 from fastapi import APIRouter, HTTPException
 from sqlalchemy import text
 from src.database import AsyncSessionLocal
-from src.config import redis_client
+# Redis disabled
+# from src.config import redis_client
 
 router = APIRouter(prefix="/health", tags=["health"])
 
@@ -28,13 +29,11 @@ async def database_health():
 
     Tests connections to:
     - MySQL database
-    - Redis cache
 
     Returns detailed connection status for each service
     """
     result = {
-        "mysql": {"status": "unknown", "message": ""},
-        "redis": {"status": "unknown", "message": ""}
+        "mysql": {"status": "unknown", "message": ""}
     }
 
     # Test MySQL connection
@@ -47,19 +46,19 @@ async def database_health():
         result["mysql"]["status"] = "failed"
         result["mysql"]["message"] = f"MySQL connection failed: {str(e)}"
 
-    # Test Redis connection
-    try:
-        await redis_client.set("health_check", {"status": "ok"}, ttl=10)
-        value = await redis_client.get("health_check")
-        if value and value.get("status") == "ok":
-            result["redis"]["status"] = "connected"
-            result["redis"]["message"] = "Redis connection successful"
-        else:
-            result["redis"]["status"] = "failed"
-            result["redis"]["message"] = "Redis read/write test failed"
-    except Exception as e:
-        result["redis"]["status"] = "failed"
-        result["redis"]["message"] = f"Redis connection failed: {str(e)}"
+    # Redis disabled
+    # try:
+    #     await redis_client.set("health_check", {"status": "ok"}, ttl=10)
+    #     value = await redis_client.get("health_check")
+    #     if value and value.get("status") == "ok":
+    #         result["redis"]["status"] = "connected"
+    #         result["redis"]["message"] = "Redis connection successful"
+    #     else:
+    #         result["redis"]["status"] = "failed"
+    #         result["redis"]["message"] = "Redis read/write test failed"
+    # except Exception as e:
+    #     result["redis"]["status"] = "failed"
+    #     result["redis"]["message"] = f"Redis connection failed: {str(e)}"
 
     # Determine overall status
     all_connected = all(
